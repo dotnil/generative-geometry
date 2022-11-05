@@ -19,26 +19,34 @@ canvas {
 <canvas></canvas>
 
 <script>
-const canvas = document.querySelector('canvas')
-const context = canvas.getContext('2d')
-
-window.addEventListener('resize', resizeCanvas, false)
-
 function resizeCanvas() {
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
 
-    const radius = 200
     const x = canvas.width / 2
     const y = canvas.height / 2
+    const radius = Math.min(x, y)
+    circleFractal(x, y, radius);
+}
 
-    context.beginPath()
-    context.fillStyle = "#FF0000"
-    context.arc(x, y, radius, 0, 2 * Math.PI)
+function circleFractal(x, y, radius) {
+  context.beginPath()
+  context.strokeStyle = "#1E1925"
+  context.arc(x, y, radius, 0, Math.PI * 2, true)
+  context.stroke();
+
+  if (radius > 2) {
+     circleFractal(x + radius/2, y, radius/2);
+     circleFractal(x - radius/2, y, radius/2);
+   }
     context.stroke();
 }
 
+const canvas = document.querySelector('canvas')
+const context = canvas.getContext('2d')
+
 resizeCanvas()
+window.addEventListener('resize', resizeCanvas, false)
 </script>
 </body>
 </html>
