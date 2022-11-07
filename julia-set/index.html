@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Julia set</title>
+<style>
+body {
+  margin: 0;
+}
+canvas {
+  display: block;
+}
+</style>
+</head>
+
+<body>
+<canvas></canvas>
+</body>
+
+<script>
+function resizeCanvas() {
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
+
+    const x = canvas.width / 2
+    const y = canvas.height / 2
+    const radius = Math.min(x, y)
+    circleFractal(x, y, radius);
+}
+
+function juliaSet(x, y, radius) {
+  context.beginPath()
+  context.strokeStyle = "#1E1925"
+  context.arc(x, y, radius, 0, Math.PI * 2, true)
+  context.stroke();
+
+  if (radius > 2) {
+     circleFractal(x + radius/2, y, radius/2);
+     circleFractal(x - radius/2, y, radius/2);
+   }
+    context.stroke();
+}
+
+const canvas = document.querySelector('canvas')
+const context = canvas.getContext('2d')
+
+resizeCanvas()
+window.addEventListener('resize', resizeCanvas, false)
+</script>
+</html>
